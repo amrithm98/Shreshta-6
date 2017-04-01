@@ -84,6 +84,7 @@ public class Login extends AppCompatActivity implements GoogleApiClient.OnConnec
                 startActivityForResult(signInIntent, RC_SIGN_IN);
             }
         });
+        final ProgressDialog progressDialog=new ProgressDialog(this);
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.g_client_id))
                 .requestEmail()
@@ -106,7 +107,7 @@ public class Login extends AppCompatActivity implements GoogleApiClient.OnConnec
                     AuthUtil.getFirebaseToken(new AuthUtil.Listener() {
                         @Override
                         public void tokenObtained(String token) {
-                              startActivity(new Intent(Login.this, Home.class));
+                            startActivity(new Intent(Login.this, Home.class));
                             Log.d("token",token);
                             Call<User> call=service.login(token);
                             call.enqueue(new Callback<User>() {
@@ -115,19 +116,21 @@ public class Login extends AppCompatActivity implements GoogleApiClient.OnConnec
                                     if(response.code()==200) {
                                         User user = response.body();
                                         Global.id=user.uid;
+                                        Toast.makeText(getApplicationContext(),user.name,Toast.LENGTH_SHORT).show();
 //                                        SharedPreferences sharedPreferences = getSharedPreferences("drishti", Context.MODE_PRIVATE);
 //                                        SharedPreferences.Editor editor = sharedPreferences.edit();
 //                                        editor.putString("id", User.id);
 //                                        editor.commit();
+                                        Log.d("RegStat",String.valueOf(user.registered));
                                         if (user.registered) {
-                                            startActivity(new Intent(Login.this, MainActivity.class));
+                                            startActivity(new Intent(Login.this, Home.class));
                                             finish();
                                         } else {
                                             if (autoLogin) {
                                                 FirebaseAuth.getInstance().signOut();
                                                 autoLogin = false;
                                             } else {
-                                                startActivity(new Intent(Login.this, MainActivity.class));
+                                                startActivity(new Intent(Login.this, Register.class));
                                                 finish();
                                             }
                                         }
@@ -173,12 +176,12 @@ public class Login extends AppCompatActivity implements GoogleApiClient.OnConnec
         Log.d(TAG, "firebaseAuthWithGoogle:" + acct.getId());
         AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
         final ProgressDialog progressDialog=new ProgressDialog(this);
-        //progressDialog.showProgressDialog();
+        progressDialog.show();
         mAuth.signInWithCredential(credential)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        //progressDialog.disMissProgressDialog();
+                        progressDialog.dismiss();
                         Log.d(TAG, "signInWithCredential:onComplete:" + task.isSuccessful());
                         // If sign in fails, display a message to the user. If sign in succeeds
                         // the auth state listener will be notified and logic to handle the
