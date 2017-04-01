@@ -79,7 +79,7 @@ public class Login extends AppCompatActivity implements GoogleApiClient.OnConnec
                     Toast.makeText(Login.this,"Network Unavailable",Toast.LENGTH_LONG).show();
                     return;
                 }
-                autoLogin=true;
+                autoLogin=false;
                 Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
                 startActivityForResult(signInIntent, RC_SIGN_IN);
             }
@@ -121,6 +121,7 @@ public class Login extends AppCompatActivity implements GoogleApiClient.OnConnec
 //                                        SharedPreferences.Editor editor = sharedPreferences.edit();
 //                                        editor.putString("id", User.id);
 //                                        editor.commit();
+                                        Log.d("RegStat",String.valueOf(user.registered));
                                         if (user.registered) {
                                             startActivity(new Intent(Login.this, Home.class));
                                             finish();
@@ -129,7 +130,7 @@ public class Login extends AppCompatActivity implements GoogleApiClient.OnConnec
                                                 FirebaseAuth.getInstance().signOut();
                                                 autoLogin = false;
                                             } else {
-                                                startActivity(new Intent(Login.this, Home.class));
+                                                startActivity(new Intent(Login.this, Register.class));
                                                 finish();
                                             }
                                         }
