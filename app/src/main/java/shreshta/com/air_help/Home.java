@@ -116,7 +116,7 @@ public class Home extends AppCompatActivity
                                         progressDialog.dismiss();
                                         Distress distress=response.body();
                                         distressId=distress.id;
-                                        //fileUpload();
+                                        Global.distressId=distressId.toString();
                                         Toast.makeText(getApplicationContext(),"Successfully Sent Signal",Toast.LENGTH_SHORT).show();
                                         finish();
                                     }else{
@@ -152,50 +152,8 @@ public class Home extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        Intent shakeService = new Intent(this, Shake_service.class);
-        startService(shakeService);
-    }
-    public void fileUpload()
-    {
-        final ProgressDialog progressDialog=new ProgressDialog(this);
-        if(NetworkUtil.isNetworkAvailable(getApplicationContext())) {
-            progressDialog.show();
-            AuthUtil.getFirebaseToken(new AuthUtil.Listener() {
-                @Override
-                public void tokenObtained(String token) {
-                    RestApiInterface service = RestApiClient.getService();
-                    Uri uri=Uri.parse(Environment.getExternalStorageDirectory()+"/video.mp4");
-                    File file=new File(Environment.getExternalStorageDirectory()+"/video.mp4");
-                    RequestBody requestFile =
-                            RequestBody.create(
-                                    MediaType.parse(getContentResolver().getType(uri)),
-                                    file
-                            );
-                    MultipartBody.Part body =
-                            MultipartBody.Part.createFormData("picture", file.getName(), requestFile);
-                    Call<Distress> call = service.fileUpload(token,distressId,body);
-                    call.enqueue(new Callback<Distress>() {
-                        @Override
-                        public void onResponse(Call<Distress> call, Response<Distress> response) {
-                            if(response.code()==200) {
-                                progressDialog.dismiss();
-                                Distress distress=response.body();
-                                Toast.makeText(getApplicationContext(),"Uploaded File",Toast.LENGTH_SHORT).show();
-                                finish();
-                            }else{
-                                Toast.makeText(getApplicationContext(),"Network Error",Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                        @Override
-                        public void onFailure(Call<Distress> call, Throwable t) {
-                            progressDialog.dismiss();
-                        }
-                    });
-                }
-            });
-        }else {
-            Toast.makeText(getApplicationContext(),"Network Error",Toast.LENGTH_SHORT).show();
-        }
+//        Intent shakeService = new Intent(this, Shake_service.class);
+//        startService(shakeService);
     }
     @Override
     public void onBackPressed() {
