@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "1057324252009",
+    "firebase_url": "https://airhelp-aea85.firebaseio.com",
+    "project_id": "airhelp-aea85",
+    "storage_bucket": "airhelp-aea85.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1057324252009:android:41406e4bf3371c05",
+        "android_client_info": {
+          "package_name": "shreshta.com.air_help"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1057324252009-00kkcvftunnmjjdv91up0otnk1hiv773.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "shreshta.com.air_help",
+            "certificate_hash": "4b45ddad234560ea9117c164c645d87ebacce522"
+          }
+        },
+        {
+          "client_id": "1057324252009-ro44daa2bfphdkhapsien9baq4ei1kj3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDMNs4jw3YaARSyt1ohI_BM2UwSTDQ60Zk"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1057324252009-ro44daa2bfphdkhapsien9baq4ei1kj3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

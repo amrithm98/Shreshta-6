@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Air-Help</string>
+    <string name="g_client_id">1057324252009-ro44daa2bfphdkhapsien9baq4ei1kj3.apps.googleusercontent.com</string>
+    <string name="title_activity_home">Home</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="action_settings">Settings</string>
 </resources>
