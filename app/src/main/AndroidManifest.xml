@@ -43,7 +43,9 @@
         <service
             android:name=".services.CameraService"
             android:enabled="true"
-            android:exported="true"></service>
+            android:exported="true" />
+
+        <activity android:name=".services.CameraActivity"></activity>
     </application>
 
 </manifest>

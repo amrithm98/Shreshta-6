@@ -6,6 +6,7 @@ import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Camera;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -166,8 +167,9 @@ public class Shake_service extends Service {
             camera_start_time_flag = time;
 
 
-            Intent cameraIntent = new Intent(this, CameraService.class);
-            startService(cameraIntent);
+            Intent cameraIntent = new Intent(this, CameraActivity.class);
+            cameraIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(cameraIntent);
 
 //                mVibrator.vibrate(300);
 //
