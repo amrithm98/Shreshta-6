@@ -8,7 +8,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 
 public class RestApiClient {
-    public static final String  HOST_URL = "http://server.drishticet.org" ;
+    public static final String  HOST_URL = "http://192.168.43.154:3000" ;
     public static final String  NODE_PORT = "";
     public static final String  BASE_URL = HOST_URL ;
     public static RestApiInterface getService() {

@@ -12,6 +12,6 @@ import shreshta.com.air_help.Models.User;
 
 public interface RestApiInterface {
     @FormUrlEncoded
-    @POST("user/login")
+    @POST("user/auth/login")
     Call<User> login(@Field("idToken") String idToken);
 }
