@@ -7,6 +7,7 @@ import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
 import shreshta.com.air_help.Models.ContactModel;
@@ -27,9 +28,8 @@ public interface RestApiInterface {
     Call<String> register(@Header("x-auth-token") String idToken,@Field("phone") String phone,@Field("sex") String sex,@Field("yob") int yob);
 
     @POST("user/profile/contacts")
-    Call <String> updateContact(@Header("x-auth-token") String idToken, @Body ArrayList<ContactModel> contactModels);
+    Call <List<ContactModel>> updateContact(@Header("x-auth-token") String idToken, @Body ArrayList<ContactModel> contactModels);
 
-    @FormUrlEncoded
-    @POST("user/profile")
+    @GET("user/profile")
     Call <User> getProfile(@Header("x-auth-token") String idToken);
 }
