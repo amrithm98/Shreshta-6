@@ -141,13 +141,13 @@ public class Login extends AppCompatActivity implements GoogleApiClient.OnConnec
 
                                 @Override
                                 public void onFailure(Call<User> call, Throwable t) {
+                                    Log.d("POYI",t.toString());
                                     Log.d("Login","Fail");
                                     Toast.makeText(Login.this,"Login Failed",Toast.LENGTH_SHORT).show();
                                 }
                             });
                         }
                     });
-
                     Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
                 } else {
                     // User is signed out

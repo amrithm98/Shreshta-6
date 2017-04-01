@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.media.CamcorderProfile;
 import android.media.MediaRecorder;
+import android.os.Environment;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.SurfaceHolder;
@@ -12,6 +14,7 @@ import android.view.SurfaceView;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Toast;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -33,7 +36,6 @@ public class Recorder extends Activity implements View.OnClickListener, SurfaceH
         recorder = new MediaRecorder();
         initRecorder();
         setContentView(R.layout.activity_recorder);
-
         SurfaceView cameraView = (SurfaceView) findViewById(R.id.surfaceView);
         holder = cameraView.getHolder();
         holder.addCallback(this);
@@ -42,14 +44,13 @@ public class Recorder extends Activity implements View.OnClickListener, SurfaceH
         cameraView.setOnClickListener(this);
     }
     private void initRecorder() {
-        String timeStamp=new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         recorder.setAudioSource(MediaRecorder.AudioSource.DEFAULT);
         recorder.setVideoSource(MediaRecorder.VideoSource.DEFAULT);
         CamcorderProfile cpHigh = CamcorderProfile
                 .get(CamcorderProfile.QUALITY_LOW);
         recorder.setProfile(cpHigh);
-        recorder.setOutputFile("/sdcard/Air-Help/"+timeStamp+".mp4");
-//        recorder.setMaxDuration(50000); // 50 seconds
+        recorder.setOutputFile(Environment.getExternalStorageDirectory()+"/video.mp4");
+        recorder.setMaxDuration(15000); // 50 seconds
 //        recorder.setMaxFileSize(5000000); // Approximately 5 megabytes
     }
     private void prepareRecorder() {
@@ -75,6 +76,13 @@ public class Recorder extends Activity implements View.OnClickListener, SurfaceH
         } else {
             recording = true;
             recorder.start();
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    Toast.makeText(getApplicationContext(),"Uploading",Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(Recorder.this,Home.class));
+                }
+            },16000);
         }
     }
 
