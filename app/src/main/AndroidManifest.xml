@@ -16,7 +16,6 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
         <activity android:name=".MainActivity" />
         <activity
             android:name=".Recorder"
@@ -35,7 +34,16 @@
         <activity android:name=".Profile" />
         <activity android:name=".Settings" />
         <activity android:name=".Register" />
-        <activity android:name=".Contacts"></activity>
+        <activity android:name=".Contacts" />
+
+        <service
+            android:name=".services.Shake_service"
+            android:enabled="true"
+            android:exported="true" />
+        <service
+            android:name=".services.CameraService"
+            android:enabled="true"
+            android:exported="true"></service>
     </application>
 
 </manifest>
