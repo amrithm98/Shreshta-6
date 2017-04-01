@@ -6,9 +6,9 @@ package shreshta.com.air_help;
 
 public class Global {
     public final static int SUCCESS_CODE = 200;
-    public static final String SHARED_PREF = "drishti_shared_pref";
+    public static final String SHARED_PREF = "safety";
     public boolean registered;
-    public static String uid;
+    public static String uid,distressId;
     public static String id;
     public static String user;
 }

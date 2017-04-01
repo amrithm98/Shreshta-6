@@ -3,14 +3,19 @@ package shreshta.com.air_help.Utils;
 import java.util.ArrayList;
 import java.util.List;
 
+import okhttp3.MultipartBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.Part;
+import retrofit2.http.Path;
 import shreshta.com.air_help.Models.ContactModel;
+import shreshta.com.air_help.Models.Distress;
 import shreshta.com.air_help.Models.User;
 import shreshta.com.air_help.Register;
 
@@ -32,4 +37,12 @@ public interface RestApiInterface {
 
     @GET("user/profile")
     Call <User> getProfile(@Header("x-auth-token") String idToken);
+
+    @FormUrlEncoded
+    @POST("user/distress/signal")
+    Call<Distress> distress(@Header("x-auth-token") String idToken,@Field("latitude")String lat,@Field("longitude")String lng);
+
+    @Multipart
+    @POST("user/distress/upload/{id}")
+    Call<Distress> fileUpload(@Header("x-auth-token") String idToken, @Path("id")String id, @Part("file")MultipartBody.Part file);
 }
