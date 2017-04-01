@@ -5,7 +5,7 @@ package shreshta.com.air_help.Models;
  */
 
 public class User {
-    public String name,uid,phone,sex,picture,status,email;
+    public String fcmId,name,uid,phone,sex,picture,status,email;
     public boolean registered;
     public int yob;
 }

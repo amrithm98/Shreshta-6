@@ -30,7 +30,7 @@
             </intent-filter>
         </receiver>
 
-        <activity android:name=".MainActivity"></activity>
+        <activity android:name=".MainActivity" />
         <activity
             android:name=".Recorder"
             android:launchMode="singleTop" />
@@ -47,7 +47,8 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".Profile" />
         <activity android:name=".Settings" />
-        <activity android:name=".Register"></activity>
+        <activity android:name=".Register" />
+        <activity android:name=".Contacts"></activity>
     </application>
 
 </manifest>

@@ -66,14 +66,13 @@ public class Register extends AppCompatActivity implements AdapterView.OnItemSel
                                 public void onResponse(Call<String> call, Response<String> response) {
                                     if(response.code()==200) {
                                         progressDialog.dismiss();
-                                        Toast.makeText(getApplicationContext(),"Register",Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(getApplicationContext(),"Successfully Registered",Toast.LENGTH_SHORT).show();
                                         startActivity(new Intent(Register.this, Home.class));
                                         finish();
                                     }else{
                                         Toast.makeText(getApplicationContext(),"Network Error",Toast.LENGTH_SHORT).show();
                                     }
                                 }
-
                                 @Override
                                 public void onFailure(Call<String> call, Throwable t) {
                                     progressDialog.dismiss();
