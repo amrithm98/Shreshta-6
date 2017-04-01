@@ -1,10 +1,15 @@
 package shreshta.com.air_help.Utils;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
+import shreshta.com.air_help.Models.ContactModel;
 import shreshta.com.air_help.Models.User;
 import shreshta.com.air_help.Register;
 
@@ -16,7 +21,15 @@ public interface RestApiInterface {
     @FormUrlEncoded
     @POST("user/auth/login")
     Call<User> login(@Field("idToken") String idToken);
+
     @FormUrlEncoded
     @POST("user/auth/register")
     Call<String> register(@Header("x-auth-token") String idToken,@Field("phone") String phone,@Field("sex") String sex,@Field("yob") int yob);
+
+    @POST("user/profile/contacts")
+    Call <String> updateContact(@Header("x-auth-token") String idToken, @Body ArrayList<ContactModel> contactModels);
+
+    @FormUrlEncoded
+    @POST("user/profile")
+    Call <User> getProfile(@Header("x-auth-token") String idToken);
 }

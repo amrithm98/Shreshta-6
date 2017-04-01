@@ -27,21 +27,21 @@ public class ContactListAdapter extends BaseAdapter {
     }
     @Override
     public int getCount() {
-        return 0;
+        return contactList.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return null;
+        return contactList.get(position);
     }
 
     @Override
     public long getItemId(int position) {
-        return 0;
+        return position;
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         Tag tag;
         if (convertView == null) {
             convertView = LayoutInflater.from(context).inflate(R.layout.item_contact, parent, false);
@@ -52,8 +52,14 @@ public class ContactListAdapter extends BaseAdapter {
         final ContactModel contactModel=(ContactModel)getItem(position);
         tag.tvName.setText(contactModel.name);
         tag.tvNumber.setText(contactModel.phone);
+        tag.remove.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                removeContact(position);
+            }
+        });
         convertView.setTag(tag);
-        return null;
+        return convertView;
     }
     static class Tag {
         TextView tvName, tvNumber;
@@ -63,6 +69,16 @@ public class ContactListAdapter extends BaseAdapter {
             tvNumber = (TextView) v.findViewById(R.id.et_phone);
             remove = (Button) v.findViewById(R.id.remove);
         }
+    }
+
+    public void removeContact(int position){
+        contactList.remove(position);
+        notifyDataSetChanged();
+    }
+
+    public void addContact(ContactModel contact){
+        contactList.add(contact);
+        notifyDataSetChanged();
     }
 }
 

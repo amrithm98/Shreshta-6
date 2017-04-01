@@ -17,6 +17,7 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import shreshta.com.air_help.Adapters.ContactListAdapter;
 import shreshta.com.air_help.Models.ContactModel;
 
 import static android.R.id.list;
@@ -48,7 +49,9 @@ public class Contacts extends AppCompatActivity {
                         ContactModel contact=new ContactModel();
                         contact.name=name;
                         contact.phone=phoneNo;
-                        list.add(contact);
+                        Log.d("Phone",phoneNo);
+                        contactListAdapter.addContact(contact);
+                        contactListAdapter.addContact(contact);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -57,12 +60,16 @@ public class Contacts extends AppCompatActivity {
         }
     }
 
+    ContactListAdapter contactListAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contacts);
         ButterKnife.bind(this);
         list = new ArrayList<ContactModel>();
+        contactListAdapter = new ContactListAdapter(list,this);
+        listView.setAdapter(contactListAdapter);
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

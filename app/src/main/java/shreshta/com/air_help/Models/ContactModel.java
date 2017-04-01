@@ -6,4 +6,7 @@ package shreshta.com.air_help.Models;
 
 public class ContactModel {
     public String name,email,phone;
+    public ContactModel(){
+
+    }
 }
