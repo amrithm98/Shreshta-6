@@ -11,47 +11,43 @@
     tools:context="shreshta.com.air_help.Settings">
 
     <CheckBox
-        android:text="CheckBox"
+        android:text="Send Message To Emergency Contact"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:id="@+id/checkBox" />
+        android:id="@+id/message" />
 
     <CheckBox
-        android:text="CheckBox"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/checkBox"
+        android:layout_below="@+id/message"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:id="@+id/checkBox2"
+        android:id="@+id/notif"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:text="Press Notification To Send Signal" />
 
     <CheckBox
-        android:text="CheckBox"
-        android:layout_width="wrap_content"
+        android:text="Shake To Launch App"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/checkBox2"
+        android:layout_below="@+id/notif"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:id="@+id/checkBox3" />
+        android:id="@+id/shake" />
 
-    <CheckBox
-        android:text="CheckBox"
+    <Button
+        android:text="Set Emergency Contacts"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/checkBox3"
-        android:layout_alignRight="@+id/checkBox3"
-        android:layout_alignEnd="@+id/checkBox3"
-        android:id="@+id/checkBox5" />
+        android:id="@+id/contact"
+        android:background="@color/colorAccent"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:textColor="#fff" />
 
-    <CheckBox
-        android:text="CheckBox"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/checkBox5"
-        android:layout_alignRight="@+id/checkBox5"
-        android:layout_alignEnd="@+id/checkBox5"
-        android:id="@+id/checkBox6" />
 </RelativeLayout>
