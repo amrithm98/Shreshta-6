@@ -18,6 +18,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import shreshta.com.air_help.R;
+import shreshta.com.air_help.Recorder;
 
 public class Shake_service extends Service {
     public Shake_service() {
@@ -83,8 +84,8 @@ public class Shake_service extends Service {
         Intent notificationIntent = new Intent(this, Shake_service.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);
 
-        Intent cameraIntent = new Intent(this, CameraService.class);
-        PendingIntent pendingIntent1 = PendingIntent.getService(this, 1, cameraIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+//        Intent cameraIntent = new Intent(this, CameraService.class);
+//        PendingIntent pendingIntent1 = PendingIntent.getService(this, 1, cameraIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         Notification notification = new Notification.Builder(this)
                 .setContentTitle(getText(R.string.notification_title))
@@ -92,7 +93,7 @@ public class Shake_service extends Service {
                 .setContentIntent(pendingIntent)
                 .setPriority(Notification.PRIORITY_MAX)
                 .setTicker(getText(R.string.ticker_text))
-                .addAction(R.drawable.bg, "Emergency", pendingIntent1)
+//                .addAction(R.drawable.bg, "Emergency", pendingIntent1)
                 .build();
 
         startForeground(ONGOING_NOTIFICATION_ID, notification);
@@ -167,7 +168,7 @@ public class Shake_service extends Service {
             camera_start_time_flag = time;
 
 
-            Intent cameraIntent = new Intent(this, CameraActivity.class);
+            Intent cameraIntent = new Intent(this, Recorder.class);
             cameraIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(cameraIntent);
 
@@ -201,11 +202,11 @@ public class Shake_service extends Service {
 //        }
 
 
-        Log.d(msg, "zdotdot=" + zdotdot);
-        Log.d(msg, "System time" + time);
-        Log.d(msg, "ACTIVATED" + activated_status);
+        Log.v(msg, "zdotdot=" + zdotdot);
+        Log.v(msg, "System time" + time);
+        Log.v(msg, "ACTIVATED" + activated_status);
 
-        Log.d(msg, "-----------------------");
+        Log.v(msg, "-----------------------");
 
 
     }
