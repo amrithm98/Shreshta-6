@@ -26,6 +26,7 @@ import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.google.android.gms.auth.api.signin.RevocationBoundService;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.io.File;
@@ -61,13 +62,13 @@ public class Home extends AppCompatActivity
         ButterKnife.bind(this);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        final ProgressDialog progressDialog = new ProgressDialog(this);
         locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
         locationListener = new LocationListener() {
             @Override
             public void onLocationChanged(Location location) {
                 lat = location.getLatitude();
                 lng = location.getLongitude();
+                Log.d("Location",lat.toString()+" "+lng.toString());
             }
 
             @Override
@@ -99,6 +100,7 @@ public class Home extends AppCompatActivity
         distress.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+<<<<<<< HEAD
                 locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 100, 0, locationListener);
                 //startActivity(new Intent(Home.this,MainActivity.class));
                 if(NetworkUtil.isNetworkAvailable(getApplicationContext())) {
@@ -141,9 +143,11 @@ public class Home extends AppCompatActivity
             public void onClick(View view) {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
+=======
+                sendDistress();
+>>>>>>> e566903273c691639e1b04cc514d1aa9b3510390
             }
         });
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -152,8 +156,65 @@ public class Home extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+<<<<<<< HEAD
 //        Intent shakeService = new Intent(this, Shake_service.class);
 //        startService(shakeService);
+=======
+        Intent shakeService = new Intent(this, Shake_service.class);
+        startService(shakeService);
+    }
+
+    public void sendDistress() {
+        final ProgressDialog progressDialog = new ProgressDialog(this);
+        //startActivity(new Intent(Home.this,MainActivity.class));
+        if (NetworkUtil.isNetworkAvailable(getApplicationContext())) {
+            if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                // TODO: Consider calling
+                //    ActivityCompat#requestPermissions
+                // here to request the missing permissions, and then overriding
+                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                //                                          int[] grantResults)
+                // to handle the case where the user grants the permission. See the documentation
+                // for ActivityCompat#requestPermissions for more details.
+                return;
+            }
+            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 100, 0, locationListener);
+            progressDialog.show();
+            Log.d("Location",lat.toString()+" "+lng.toString());
+            AuthUtil.getFirebaseToken(new AuthUtil.Listener() {
+                @Override
+                public void tokenObtained(String token) {
+                    RestApiInterface service = RestApiClient.getService();
+                    Call<Distress> call = service.distress(token,lat.toString(),lng.toString());
+                    Global.lat=lat;
+                    Global.lng=lng;
+                    call.enqueue(new Callback<Distress>() {
+                        @Override
+                        public void onResponse(Call<Distress> call, Response<Distress> response) {
+                            if(response.code()==200) {
+                                progressDialog.dismiss();
+                                Distress distress=response.body();
+                                distressId=distress.id;
+                                Global.distressId=distressId;
+                                //fileUpload();
+                                Toast.makeText(getApplicationContext(),"Successfully Sent Signal",Toast.LENGTH_SHORT).show();
+                                startActivity(new Intent(Home.this,Recorder.class));
+                                finish();
+                            }else{
+                                Toast.makeText(getApplicationContext(),"Network Error",Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                        @Override
+                        public void onFailure(Call<Distress> call, Throwable t) {
+                            progressDialog.dismiss();
+                        }
+                    });
+                }
+            });
+        }else {
+            Toast.makeText(getApplicationContext(),"Network Error",Toast.LENGTH_SHORT).show();
+        }
+>>>>>>> e566903273c691639e1b04cc514d1aa9b3510390
     }
     @Override
     public void onBackPressed() {

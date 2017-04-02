@@ -92,7 +92,7 @@ public class Login extends AppCompatActivity implements GoogleApiClient.OnConnec
                     Toast.makeText(Login.this,"Network Unavailable",Toast.LENGTH_LONG).show();
                     return;
                 }
-                autoLogin=false;
+                autoLogin=true;
                 Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
                 startActivityForResult(signInIntent, RC_SIGN_IN);
             }
