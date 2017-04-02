@@ -44,5 +44,5 @@ public interface RestApiInterface {
 
     @Multipart
     @POST("user/distress/upload/{id}")
-    Call<Distress> fileUpload(@Header("x-auth-token") String idToken, @Path("id")String id, @Part("file")MultipartBody.Part file);
+    Call<Distress> fileUpload(@Header("x-auth-token") String idToken, @Path("id")String id, @Part MultipartBody.Part file);
 }

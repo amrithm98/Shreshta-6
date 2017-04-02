@@ -11,4 +11,6 @@ public class Global {
     public static String uid,distressId;
     public static String id;
     public static String user;
+    public static Double lat,lng;
+
 }

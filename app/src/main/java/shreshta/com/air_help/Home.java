@@ -26,6 +26,7 @@ import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.google.android.gms.auth.api.signin.RevocationBoundService;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.io.File;
@@ -68,7 +69,6 @@ public class Home extends AppCompatActivity
                 lat = location.getLatitude();
                 lng = location.getLongitude();
                 Log.d("Location",lat.toString()+" "+lng.toString());
-
             }
 
             @Override
@@ -137,6 +137,8 @@ public class Home extends AppCompatActivity
                 public void tokenObtained(String token) {
                     RestApiInterface service = RestApiClient.getService();
                     Call<Distress> call = service.distress(token,lat.toString(),lng.toString());
+                    Global.lat=lat;
+                    Global.lng=lng;
                     call.enqueue(new Callback<Distress>() {
                         @Override
                         public void onResponse(Call<Distress> call, Response<Distress> response) {
@@ -144,8 +146,10 @@ public class Home extends AppCompatActivity
                                 progressDialog.dismiss();
                                 Distress distress=response.body();
                                 distressId=distress.id;
+                                Global.distressId=distressId;
                                 //fileUpload();
                                 Toast.makeText(getApplicationContext(),"Successfully Sent Signal",Toast.LENGTH_SHORT).show();
+                                startActivity(new Intent(Home.this,Recorder.class));
                                 finish();
                             }else{
                                 Toast.makeText(getApplicationContext(),"Network Error",Toast.LENGTH_SHORT).show();
