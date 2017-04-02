@@ -115,7 +115,7 @@ public class Login extends AppCompatActivity implements GoogleApiClient.OnConnec
                                 public void onResponse(Call<User> call, Response<User> response) {
                                     if(response.code()==200) {
                                         User user = response.body();
-                                        Global.id=user.uid;
+                                        Global.id=user.id;
                                         Toast.makeText(getApplicationContext(),user.name,Toast.LENGTH_SHORT).show();
 //                                        SharedPreferences sharedPreferences = getSharedPreferences("drishti", Context.MODE_PRIVATE);
 //                                        SharedPreferences.Editor editor = sharedPreferences.edit();

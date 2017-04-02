@@ -30,7 +30,6 @@ import com.google.android.gms.auth.api.signin.RevocationBoundService;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.io.File;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import okhttp3.MediaType;
@@ -44,7 +43,6 @@ import shreshta.com.air_help.Utils.AuthUtil;
 import shreshta.com.air_help.Utils.NetworkUtil;
 import shreshta.com.air_help.Utils.RestApiClient;
 import shreshta.com.air_help.Utils.RestApiInterface;
-import shreshta.com.air_help.services.Shake_service;
 
 public class Home extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -68,6 +66,8 @@ public class Home extends AppCompatActivity
             public void onLocationChanged(Location location) {
                 lat = location.getLatitude();
                 lng = location.getLongitude();
+                Global.lat=lat;
+                Global.lng=lng;
                 Log.d("Location",lat.toString()+" "+lng.toString());
             }
 
@@ -111,8 +111,8 @@ public class Home extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        Intent shakeService = new Intent(this, Shake_service.class);
-        startService(shakeService);
+//        Intent shakeService = new Intent(this, Shake_service.class);
+//        startService(shakeService);
     }
 
     public void sendDistress() {
@@ -136,17 +136,17 @@ public class Home extends AppCompatActivity
                 @Override
                 public void tokenObtained(String token) {
                     RestApiInterface service = RestApiClient.getService();
-                    Call<Distress> call = service.distress(token,lat.toString(),lng.toString());
+                    Call<String> call = service.distress(token,lat.toString(),lng.toString());
                     Global.lat=lat;
                     Global.lng=lng;
-                    call.enqueue(new Callback<Distress>() {
+                    call.enqueue(new Callback<String>() {
                         @Override
-                        public void onResponse(Call<Distress> call, Response<Distress> response) {
+                        public void onResponse(Call<String> call, Response<String> response) {
                             if(response.code()==200) {
                                 progressDialog.dismiss();
-                                Distress distress=response.body();
-                                distressId=distress.id;
-                                Global.distressId=distressId;
+                                //Distress distress=response.body();
+                                //distressId=distress.id;
+                                //Global.distressId=distressId;
                                 //fileUpload();
                                 Toast.makeText(getApplicationContext(),"Successfully Sent Signal",Toast.LENGTH_SHORT).show();
                                 startActivity(new Intent(Home.this,Recorder.class));
@@ -156,7 +156,7 @@ public class Home extends AppCompatActivity
                             }
                         }
                         @Override
-                        public void onFailure(Call<Distress> call, Throwable t) {
+                        public void onFailure(Call<String> call, Throwable t) {
                             progressDialog.dismiss();
                         }
                     });
