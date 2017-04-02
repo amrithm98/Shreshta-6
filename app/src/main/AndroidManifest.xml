@@ -45,6 +45,12 @@
             android:name=".services.CameraService"
             android:enabled="true"
             android:exported="true" />
+        <service
+            android:name=".FirebaseNotifs">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+            </intent-filter>
+        </service>
 
         <activity android:name=".services.CameraActivity"></activity>
     </application>

@@ -4,7 +4,6 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Shreshta-6.iml" filepath="$PROJECT_DIR$/Shreshta-6.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/sreshta6-android.iml" filepath="$PROJECT_DIR$/sreshta6-android.iml" />
     </modules>
   </component>
 </project>
