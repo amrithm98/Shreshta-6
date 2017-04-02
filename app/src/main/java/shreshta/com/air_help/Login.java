@@ -4,8 +4,6 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.Uri;
-import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -28,26 +26,19 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
-import com.google.firebase.iid.FirebaseInstanceId;
-
-import java.io.File;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import okhttp3.MediaType;
-import okhttp3.MultipartBody;
-import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import shreshta.com.air_help.Models.Distress;
 import shreshta.com.air_help.Models.User;
 import shreshta.com.air_help.Utils.AuthUtil;
 import shreshta.com.air_help.Utils.NetworkUtil;
 import shreshta.com.air_help.Utils.RestApiClient;
 import shreshta.com.air_help.Utils.RestApiInterface;
 
-public class Login extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener{
+public class Login extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
     boolean flag = true;
     boolean autoLogin=true;
     private GoogleApiClient mGoogleApiClient;
@@ -55,7 +46,6 @@ public class Login extends AppCompatActivity implements GoogleApiClient.OnConnec
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
     private static final String TAG = "GoogleActivity";
-    public String fcmToken;
     @BindView(R.id.gplus)
     Button gPlus;
     @Override
@@ -112,9 +102,6 @@ public class Login extends AppCompatActivity implements GoogleApiClient.OnConnec
                     // User is signed in
                     Global.uid=user.getUid();
                     Global.user=user.getDisplayName();
-                    fcmToken=FirebaseInstanceId.getInstance().getToken();
-                    Log.d("fcm",fcmToken);
-                    updateFcm(fcmToken);
                     Log.d("User",Global.user);
                     final RestApiInterface service = RestApiClient.getService();
                     AuthUtil.getFirebaseToken(new AuthUtil.Listener() {
@@ -176,40 +163,7 @@ public class Login extends AppCompatActivity implements GoogleApiClient.OnConnec
         mAuth.addAuthStateListener(mAuthListener);
 
     }
-    public void updateFcm(final String fcmtoken)
-    {
-        final ProgressDialog progressDialog=new ProgressDialog(this);
-        if(NetworkUtil.isNetworkAvailable(getApplicationContext())) {
-            progressDialog.show();
-            AuthUtil.getFirebaseToken(new AuthUtil.Listener() {
-                @Override
-                public void tokenObtained(String token) {
-                    RestApiInterface service = RestApiClient.getService();
-                    Log.d("upload","Doing");
-                    Call<User> call = service.fcmUpdate(token,fcmtoken);
-                    call.enqueue(new Callback<User>() {
-                        @Override
-                        public void onResponse(Call<User> call, Response<User> response) {
-                            if(response.code()==200) {
-                                progressDialog.dismiss();
-                                Toast.makeText(getApplicationContext(),"FCM Updated",Toast.LENGTH_SHORT).show();
-                                finish();
-                            }else{
-                                Toast.makeText(getApplicationContext(),"Network Error",Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                        @Override
-                        public void onFailure(Call<User> call, Throwable t) {
-                            Log.d("Error",t.toString());
-                            progressDialog.dismiss();
-                        }
-                    });
-                }
-            });
-        }else {
-            Toast.makeText(getApplicationContext(),"Network Error",Toast.LENGTH_SHORT).show();
-        }
-    }
+
     @Override
     protected void onStop() {
         super.onStop();

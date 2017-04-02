@@ -45,8 +45,4 @@ public interface RestApiInterface {
     @Multipart
     @POST("user/distress/upload/{id}")
     Call<Distress> fileUpload(@Header("x-auth-token") String idToken, @Path("id")String id, @Part MultipartBody.Part file);
-
-    @FormUrlEncoded
-    @POST("user/auth/register")
-    Call <User> fcmUpdate(@Header("x-auth-token")String idToken,@Field("fcmId")String fcm);
 }
