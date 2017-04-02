@@ -30,7 +30,6 @@ import com.google.android.gms.auth.api.signin.RevocationBoundService;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.io.File;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import okhttp3.MediaType;
@@ -44,7 +43,6 @@ import shreshta.com.air_help.Utils.AuthUtil;
 import shreshta.com.air_help.Utils.NetworkUtil;
 import shreshta.com.air_help.Utils.RestApiClient;
 import shreshta.com.air_help.Utils.RestApiInterface;
-import shreshta.com.air_help.services.Shake_service;
 
 public class Home extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -111,8 +109,8 @@ public class Home extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        Intent shakeService = new Intent(this, Shake_service.class);
-        startService(shakeService);
+//        Intent shakeService = new Intent(this, Shake_service.class);
+//        startService(shakeService);
     }
 
     public void sendDistress() {

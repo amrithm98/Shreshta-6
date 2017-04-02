@@ -4,12 +4,15 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Typeface;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.auth.api.Auth;
@@ -48,6 +51,9 @@ public class Login extends AppCompatActivity implements GoogleApiClient.OnConnec
     private static final String TAG = "GoogleActivity";
     @BindView(R.id.gplus)
     Button gPlus;
+    TextView tag;
+    ImageView head;
+    Typeface typeface;
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -72,6 +78,10 @@ public class Login extends AppCompatActivity implements GoogleApiClient.OnConnec
         setContentView(R.layout.activity_login);
         FirebaseApp.initializeApp(this);
         ButterKnife.bind(this);
+        head = (ImageView)findViewById(R.id.head);
+        tag = (TextView) findViewById(R.id.tag);
+        typeface=Typeface.createFromAsset(getAssets(), "fonts/RobotoSlab-Thin.ttf");
+        tag.setTypeface(typeface);
         gPlus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
