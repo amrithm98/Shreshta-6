@@ -5,6 +5,7 @@ package shreshta.com.air_help.Models;
  */
 
 public class Distress {
-    public String id,latitude,longitude,userId,regionId,file;
+    public String latitude,longitude;
+    public int userId,regionId,id;
     public User user;
 }

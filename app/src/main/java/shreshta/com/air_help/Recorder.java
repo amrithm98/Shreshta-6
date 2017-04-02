@@ -129,7 +129,6 @@ public class Recorder extends Activity implements View.OnClickListener, SurfaceH
     {
         final ProgressDialog progressDialog=new ProgressDialog(this);
         if(NetworkUtil.isNetworkAvailable(getApplicationContext())) {
-            progressDialog.show();
             AuthUtil.getFirebaseToken(new AuthUtil.Listener() {
                 @Override
                 public void tokenObtained(String token) {
@@ -141,7 +140,7 @@ public class Recorder extends Activity implements View.OnClickListener, SurfaceH
                     MultipartBody.Part body =
                             MultipartBody.Part.createFormData("file", file.getName(),requestFile);
                     Log.d("upload","Doing");
-                    Call<Distress> call = service.fileUpload(token,Global.distressId,body);
+                    Call<Distress> call = service.fileUpload(token,String.valueOf(Global.distressId),body);
                     call.enqueue(new Callback<Distress>() {
                         @Override
                         public void onResponse(Call<Distress> call, Response<Distress> response) {

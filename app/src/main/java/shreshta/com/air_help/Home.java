@@ -10,9 +10,12 @@ import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
+import android.telephony.SmsManager;
 import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -43,16 +46,18 @@ import shreshta.com.air_help.Utils.AuthUtil;
 import shreshta.com.air_help.Utils.NetworkUtil;
 import shreshta.com.air_help.Utils.RestApiClient;
 import shreshta.com.air_help.Utils.RestApiInterface;
+import shreshta.com.air_help.services.Shake_service;
 
 public class Home extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     @BindView(R.id.distressButton)
     Button distress;
-    String distressId;
+    int distressId;
     private LocationManager locationManager;
     private LocationListener locationListener;
     Double lat = 0.0, lng = 0.0;
-
+    String phoneNo,message;
+    private static final int MY_PERMISSIONS_REQUEST_SEND_SMS =0 ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -111,8 +116,8 @@ public class Home extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-//        Intent shakeService = new Intent(this, Shake_service.class);
-//        startService(shakeService);
+        Intent shakeService = new Intent(this, Shake_service.class);
+        startService(shakeService);
     }
 
     public void sendDistress() {
@@ -130,33 +135,31 @@ public class Home extends AppCompatActivity
                 return;
             }
             locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 100, 0, locationListener);
-            progressDialog.show();
             Log.d("Location",lat.toString()+" "+lng.toString());
             AuthUtil.getFirebaseToken(new AuthUtil.Listener() {
                 @Override
                 public void tokenObtained(String token) {
                     RestApiInterface service = RestApiClient.getService();
-                    Call<String> call = service.distress(token,lat.toString(),lng.toString());
+                    Call<Distress> call = service.distress(token,lat.toString(),lng.toString());
                     Global.lat=lat;
                     Global.lng=lng;
-                    call.enqueue(new Callback<String>() {
+                    call.enqueue(new Callback<Distress>() {
                         @Override
-                        public void onResponse(Call<String> call, Response<String> response) {
+                        public void onResponse(Call<Distress> call, Response<Distress> response) {
                             if(response.code()==200) {
                                 progressDialog.dismiss();
-                                //Distress distress=response.body();
-                                //distressId=distress.id;
-                                //Global.distressId=distressId;
-                                //fileUpload();
+                                Distress distress=response.body();
+                                distressId=distress.id;
+                                Global.distressId=distressId;
                                 Toast.makeText(getApplicationContext(),"Successfully Sent Signal",Toast.LENGTH_SHORT).show();
-                                startActivity(new Intent(Home.this,Recorder.class));
                                 finish();
                             }else{
                                 Toast.makeText(getApplicationContext(),"Network Error",Toast.LENGTH_SHORT).show();
                             }
                         }
                         @Override
-                        public void onFailure(Call<String> call, Throwable t) {
+                        public void onFailure(Call<Distress> call, Throwable t) {
+
                             progressDialog.dismiss();
                         }
                     });
@@ -165,7 +168,9 @@ public class Home extends AppCompatActivity
         }else {
             Toast.makeText(getApplicationContext(),"Network Error",Toast.LENGTH_SHORT).show();
         }
+        startActivity(new Intent(Home.this,Recorder.class));
     }
+
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
