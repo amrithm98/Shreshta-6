@@ -10,7 +10,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -48,8 +51,10 @@ public class Login extends AppCompatActivity implements GoogleApiClient.OnConnec
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
     private static final String TAG = "GoogleActivity";
-    TextView myTextView;
+    TextView tag;
+    ImageView head;
     Typeface typeface;
+//    Animation animFadeIn,animZoomIn,animMove;
     @BindView(R.id.gplus)
     Button gPlus;
     @Override
@@ -76,9 +81,10 @@ public class Login extends AppCompatActivity implements GoogleApiClient.OnConnec
         setContentView(R.layout.activity_login);
         FirebaseApp.initializeApp(this);
         ButterKnife.bind(this);
-        myTextView = (TextView) findViewById(R.id.welcome);
-        typeface=Typeface.createFromAsset(getAssets(), "fonts/RobotoSlab-Regular.ttf");
-        myTextView.setTypeface(typeface);
+        head = (ImageView)findViewById(R.id.head);
+        tag = (TextView) findViewById(R.id.tag);
+        typeface=Typeface.createFromAsset(getAssets(), "fonts/RobotoSlab-Thin.ttf");
+        tag.setTypeface(typeface);
         gPlus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

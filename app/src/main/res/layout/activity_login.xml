@@ -12,38 +12,45 @@
     android:background="#fff"
     tools:context="shreshta.com.air_help.Login">
 
-    <LinearLayout
+
+    <ImageView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
+        android:layout_height="wrap_content"
+        android:src="@drawable/main_page01"
+        android:id="@+id/head"
+        android:layout_marginTop="56dp"
         android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="22dp"
+        android:layout_marginEnd="22dp"
+        android:visibility="gone"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Your Guardian Angel!"
+        android:textSize="30sp"
+        android:textAlignment="viewEnd"
+        android:gravity="end"
+        android:id="@+id/tag"
+        android:layout_marginTop="70dp"
+        android:layout_below="@+id/head"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true">
+        android:layout_alignParentStart="true" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Why fear when we are here? Air Help has only one aim, to help you in case of emergency. Sign in and be safe with us!"
-            android:textSize="20sp"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:id="@+id/welcome"/>
+    <Button
+        android:text="Login with Google"
+        android:id="@+id/gplus"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="#004d40"
+        android:background="#e8f5e9"
+        android:drawableLeft="@drawable/g"
+        tools:textSize="18sp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
-        <Button
-            android:text="Login with Google"
-            android:id="@+id/gplus"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="#004d40"
-            android:textStyle="bold"
-            android:background="#e8f5e9"
-            android:drawableLeft="@drawable/g"
-            tools:textSize="18sp"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginBottom="10dp" />
-    </LinearLayout>
 
 </RelativeLayout>
