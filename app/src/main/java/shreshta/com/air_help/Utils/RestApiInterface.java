@@ -40,9 +40,13 @@ public interface RestApiInterface {
 
     @FormUrlEncoded
     @POST("user/distress/signal")
-    Call<Distress> distress(@Header("x-auth-token") String idToken,@Field("latitude")String lat,@Field("longitude")String lng);
+    Call<String> distress(@Header("x-auth-token") String idToken,@Field("latitude")String lat,@Field("longitude")String lng);
 
     @Multipart
     @POST("user/distress/upload/{id}")
     Call<Distress> fileUpload(@Header("x-auth-token") String idToken, @Path("id")String id, @Part MultipartBody.Part file);
+
+    @FormUrlEncoded
+    @POST("user/auth/register")
+    Call <User> fcmUpdate(@Header("x-auth-token")String idToken,@Field("fcmId")String fcm);
 }

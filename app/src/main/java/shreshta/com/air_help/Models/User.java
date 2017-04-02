@@ -7,7 +7,7 @@ import java.util.ArrayList;
  */
 
 public class User {
-    public String fcmId,name,uid,phone,sex,picture,status,email;
+    public String fcmId,name,uid,phone,sex,picture,status,email,id;
     public boolean registered;
     public int yob;
     public ArrayList<ContactModel> contacts;

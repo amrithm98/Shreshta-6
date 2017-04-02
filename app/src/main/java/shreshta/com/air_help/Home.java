@@ -66,6 +66,8 @@ public class Home extends AppCompatActivity
             public void onLocationChanged(Location location) {
                 lat = location.getLatitude();
                 lng = location.getLongitude();
+                Global.lat=lat;
+                Global.lng=lng;
                 Log.d("Location",lat.toString()+" "+lng.toString());
             }
 
@@ -134,17 +136,17 @@ public class Home extends AppCompatActivity
                 @Override
                 public void tokenObtained(String token) {
                     RestApiInterface service = RestApiClient.getService();
-                    Call<Distress> call = service.distress(token,lat.toString(),lng.toString());
+                    Call<String> call = service.distress(token,lat.toString(),lng.toString());
                     Global.lat=lat;
                     Global.lng=lng;
-                    call.enqueue(new Callback<Distress>() {
+                    call.enqueue(new Callback<String>() {
                         @Override
-                        public void onResponse(Call<Distress> call, Response<Distress> response) {
+                        public void onResponse(Call<String> call, Response<String> response) {
                             if(response.code()==200) {
                                 progressDialog.dismiss();
-                                Distress distress=response.body();
-                                distressId=distress.id;
-                                Global.distressId=distressId;
+                                //Distress distress=response.body();
+                                //distressId=distress.id;
+                                //Global.distressId=distressId;
                                 //fileUpload();
                                 Toast.makeText(getApplicationContext(),"Successfully Sent Signal",Toast.LENGTH_SHORT).show();
                                 startActivity(new Intent(Home.this,Recorder.class));
@@ -154,7 +156,7 @@ public class Home extends AppCompatActivity
                             }
                         }
                         @Override
-                        public void onFailure(Call<Distress> call, Throwable t) {
+                        public void onFailure(Call<String> call, Throwable t) {
                             progressDialog.dismiss();
                         }
                     });
